@@ -7,7 +7,7 @@ public class Restaurant {
     public String id;
     public int capacity;
     private int currentCapacity;
-    private ArrayList<Object> tables = new ArrayList<Object>();
+    private ArrayList<Table> tables = new ArrayList<Table>();
     private int seatsPerTable = 6;
 
     /*** No-args constructor for Restaurant. This sets the
@@ -18,7 +18,7 @@ public class Restaurant {
         capacity = 60;
         currentCapacity = capacity;
         for (int i = 0; i < capacity/seatsPerTable; i++){
-            tables.add(new Object());
+            tables.add(new Table(i+1, seatsPerTable));
         }
     }
 
@@ -31,6 +31,9 @@ public class Restaurant {
         this.id = id;
         this.capacity = capacity;
         currentCapacity = capacity;
+        for (int i = 0; i < capacity/seatsPerTable; i++){
+            tables.add(new Table(i, seatsPerTable));
+        }
     }
 
     /**
@@ -64,11 +67,35 @@ public class Restaurant {
     public String toString(){
         return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity + "\tSeats Free:\t" +currentCapacity;
     }
+    public void setTables(int tableNo, boolean taken){
+        int temp = tableNo-1;
+        tables.get(temp).setIsTaken(taken);
+        if (taken = true) {
+            currentCapacity -= tables.get(temp).getSeats();
+        }
+    }
+
+    /**
+     * This lists the tables in the restaurant.
+     * @param hideBooked if true, this will only show Tables that are not taken.
+     */
+    public void listTables(boolean hideBooked){
+        if (hideBooked){
+            for (Table table : tables) {
+                if (!table.isTaken()) System.out.println(table);
+            }
+        } else {
+            for (Table table : tables) {
+                System.out.println(table);
+            }
+        }
+    }
 }
 
-// class Test {
-//    public static void main (String[] args){
-//        Restaurant YumPortumna = new Restaurant("YumPr5", 42);
-//        System.out.print(YumPortumna.toString());
-//    }
-//}
+ class Test {
+    public static void main (String[] args){
+        Restaurant YumPortumna = new Restaurant("YumPr5", 42);
+        System.out.print(YumPortumna.toString());
+        YumPortumna.listTables(false);
+    }
+}
