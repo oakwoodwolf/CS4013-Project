@@ -56,14 +56,19 @@ public class Restaurant {
     public void setCurrentCapacity(int currentCapacity) {
         this.currentCapacity = currentCapacity;
     }
+    @Override
+    /**
+     * This returns the Restaurant class in String form.
+     * @return the Restaurant Summary as a String
+     */
     public String toString(){
         return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity + "\tSeats Free:\t" +currentCapacity;
     }
 }
 
- class Test {
-    public static void main (String[] args){
-        Restaurant YumPortumna = new Restaurant("YumPr5", 42);
-        System.out.print(YumPortumna.toString());
-    }
-}
+// class Test {
+//    public static void main (String[] args){
+//        Restaurant YumPortumna = new Restaurant("YumPr5", 42);
+//        System.out.print(YumPortumna.toString());
+//    }
+//}
