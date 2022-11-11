@@ -17,6 +17,10 @@ public class Table {
 
     }
 
+    public int getTableNo() {
+        return tableNo;
+    }
+
     public boolean isTaken() {
         return isTaken;
     }

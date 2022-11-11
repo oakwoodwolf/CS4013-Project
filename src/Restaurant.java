@@ -1,12 +1,15 @@
 package src;
 
+import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Restaurant {
     public String id;
     public int capacity;
-    private int currentCapacity;
+//    private int currentCapacity;
+
+    private Object menu = new Object();
     private ArrayList<Table> tables = new ArrayList<Table>();
     private int seatsPerTable = 6;
 
@@ -15,8 +18,8 @@ public class Restaurant {
      */
     public Restaurant(){
         id = "YUM00";
-        capacity = 60;
-        currentCapacity = capacity;
+        capacity = 6;
+//        currentCapacity = capacity;
         for (int i = 0; i < capacity/seatsPerTable; i++){
             tables.add(new Table(i+1, seatsPerTable));
         }
@@ -30,9 +33,9 @@ public class Restaurant {
     public Restaurant(String id, int capacity){
         this.id = id;
         this.capacity = capacity;
-        currentCapacity = capacity;
-        for (int i = 0; i < capacity/seatsPerTable; i++){
-            tables.add(new Table(i, seatsPerTable));
+        //currentCapacity = capacity;
+        for (int i = 0; i < capacity; i++){
+            tables.add(new Table(i, capacity));
         }
     }
 
@@ -52,27 +55,17 @@ public class Restaurant {
         return capacity;
     }
 
-    /**
-     * This allows the other restaurants to reduce or increase capacity based on the booking
-     * @param currentCapacity The number of free chairs available at this restaurant
-     */
-    public void setCurrentCapacity(int currentCapacity) {
-        this.currentCapacity = currentCapacity;
-    }
     @Override
     /**
      * This returns the Restaurant class in String form.
      * @return the Restaurant Summary as a String
      */
     public String toString(){
-        return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity + "\tSeats Free:\t" +currentCapacity;
+        return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity;
     }
     public void setTables(int tableNo, boolean taken){
         int temp = tableNo-1;
         tables.get(temp).setIsTaken(taken);
-        if (taken = true) {
-            currentCapacity -= tables.get(temp).getSeats();
-        }
     }
 
     /**
@@ -90,12 +83,36 @@ public class Restaurant {
             }
         }
     }
+
+    /**
+     * This makes a csv-ready ArrayList, with first value being restaurant id, 2nd being table no, and 3rd being seat count.
+     * @return A line for the arraylist
+     */
+    public String toCSV(){
+        StringBuilder temp = new StringBuilder(new String());
+        for (Table table : tables){
+            String tableID = (id + ","+ table.getTableNo()+","+table.getSeats() + "\n");
+            temp.append(tableID);
+        }
+        return temp.toString();
+    }
+
 }
 
  class Test {
     public static void main (String[] args){
-        Restaurant YumPortumna = new Restaurant("YumPr5", 42);
-        System.out.print(YumPortumna.toString());
-        YumPortumna.listTables(false);
+        File file = new File("restaurant.csv");
+        try (FileReader reader = new FileReader(file);){
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Restaurant YumPortumna = new Restaurant("YumPr5", 6);
+        System.out.print(YumPortumna.toCSV());
+        try (PrintWriter out = new PrintWriter("restaurant.csv")){
+            out.println(YumPortumna.toCSV());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
