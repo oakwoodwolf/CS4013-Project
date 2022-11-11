@@ -1,7 +1,6 @@
 package src;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Restaurant {
@@ -20,9 +19,6 @@ public class Restaurant {
         id = "YUM00";
         capacity = 6;
 //        currentCapacity = capacity;
-        for (int i = 0; i < capacity/seatsPerTable; i++){
-            tables.add(new Table(i+1, seatsPerTable));
-        }
     }
 
     /**
@@ -34,9 +30,10 @@ public class Restaurant {
         this.id = id;
         this.capacity = capacity;
         //currentCapacity = capacity;
-        for (int i = 0; i < capacity; i++){
-            tables.add(new Table(i, capacity));
-        }
+    }
+    public void addTable(int no, int capacity){
+        Table table = new Table(no, capacity);
+        tables.add(table);
     }
 
     /**
@@ -101,7 +98,7 @@ public class Restaurant {
 
  class Test {
     public static void main (String[] args){
-        File file = new File("restaurant.csv");
+        File file = new File("restaurants.csv");
         try (FileReader reader = new FileReader(file);){
 
         } catch (IOException e) {
@@ -109,7 +106,7 @@ public class Restaurant {
         }
         Restaurant YumPortumna = new Restaurant("YumPr5", 6);
         System.out.print(YumPortumna.toCSV());
-        try (PrintWriter out = new PrintWriter("restaurant.csv")){
+        try (PrintWriter out = new PrintWriter("restaurants.csv")){
             out.println(YumPortumna.toCSV());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
