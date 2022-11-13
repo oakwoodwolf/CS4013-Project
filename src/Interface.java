@@ -1,6 +1,7 @@
 package src;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -16,6 +17,8 @@ public class Interface {
 
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
+        ArrayList<Restaurant> newlist = system.getRestaurants();
+
         boolean running = true;
         GregorianCalendar calendar = new GregorianCalendar();
         while (running){
@@ -24,10 +27,10 @@ public class Interface {
             String command = in.nextLine();
             switch (command){
                 case ("1") :
-                    System.out.println("Enter the restaurant you want to check for");
+                    System.out.println(newlist);
                     break;
                 case ("2") :
-                    System.out.println();
+                    System.out.println("Not implemented yet");
                     break;
                 case ("3") :
                     running = false;

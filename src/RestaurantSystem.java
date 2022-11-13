@@ -26,6 +26,7 @@ public class RestaurantSystem {
             if (!exists(restaurantID)){
                 Restaurant res = new Restaurant(restaurantID, capacity);
                 res.addTable(tableNo,capacity);
+                restaurants.add(res);
             } else {
                 for (int j = 0; j < restaurants.size(); j++){
                     if (restaurants.get(i).getId().contains(restaurantID)){
@@ -42,5 +43,9 @@ public class RestaurantSystem {
             }
         }
         return false;
+    }
+
+    public ArrayList<Restaurant> getRestaurants() {
+        return restaurants;
     }
 }
