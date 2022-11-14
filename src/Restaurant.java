@@ -57,7 +57,12 @@ public class Restaurant {
      * This returns the Restaurant class in String form.
      * @return the Restaurant Summary as a String
      */
-    public String toString(){
+    public String toString()
+    {
+        int capacity = 0;
+        for (int l = 0; l < tables.size(); l++){
+            capacity += tables.get(l).getSeats();
+        }
         return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity;
     }
     public void setTables(int tableNo, boolean taken){
