@@ -12,6 +12,10 @@ public class RestaurantSystem {
     Scanner resScan = new Scanner(res);
     Scanner in;
 
+    /**
+     *  This starts up the Restaurant system, loading the csv files and creating classes from them
+     * @throws FileNotFoundException if the .csv file cannot be found.
+     */
     public RestaurantSystem() throws FileNotFoundException {
         in = new Scanner(System.in);
         ArrayList<String[]> csvContents = new ArrayList<>();
@@ -40,6 +44,9 @@ public class RestaurantSystem {
         }
     }
 
+    /**
+     * This runs the menu of the program, serving as the text interface
+     */
     public void run()
     {
         boolean running = true;
