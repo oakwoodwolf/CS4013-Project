@@ -41,6 +41,9 @@ public class Reservation {
     public String toString() {
         return reservationID + "\t" + CustomerId + "\t"+ TableId +"\t"+ NoOfPeople + "\t" + LocalDate + "\t" + LocalTime;
     }
+    public String toCSV(){
+        return reservationID+","+NoOfPeople+","+LocalDate+","+LocalTime+","+TableId+","+CustomerId+ "\n";
+    }
 
     public int getTableId() {
         return TableId;

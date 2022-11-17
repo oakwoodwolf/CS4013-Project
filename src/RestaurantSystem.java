@@ -2,6 +2,7 @@ package src;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.chrono.ChronoLocalDate;
@@ -89,7 +90,7 @@ public class RestaurantSystem {
         for (String[] csvContent : csvContents) {
             String reservationID = csvContent[0];
             int numberOfPeople = Integer.parseInt(csvContent[1]);
-            String[] dateTemp = csvContent[2].split("/");
+            String[] dateTemp = csvContent[2].split("-");
             LocalDate date = LocalDate.of(2000+(Integer.parseInt(dateTemp[2])),Integer.parseInt(dateTemp[1]),Integer.parseInt(dateTemp[0]));
             String[] timeTemp = csvContent[3].split("\\.");
             String minutesTemp = timeTemp[1].substring(0,1);
@@ -123,6 +124,8 @@ public class RestaurantSystem {
                 case ('3') -> checkYourReservations();
                 default -> {
                     running = false;
+                    System.out.println("Saving.");
+                    SaveAll();
                     System.out.println("Exiting. Thank you for visiting Yum!");
                     resScan.close();
                     in.close();
@@ -136,7 +139,7 @@ public class RestaurantSystem {
         String line = in.nextLine();
         LocalDate date;
         if (!line.contentEquals("")) {
-            String[] lineSplit = line.split("/");
+            String[] lineSplit = line.split("/-");
             System.out.println(Arrays.toString(lineSplit));
             int year = Integer.parseInt(lineSplit[0]);
             int month = Integer.parseInt(lineSplit[1]);
@@ -172,7 +175,7 @@ public class RestaurantSystem {
             Reservation reservation = (Reservation) choose(yourReservations);
             restaurants.get(param);
             System.out.println("You have selected Reservation " + reservation.getReservationID() + "\t in: " + restaurants.get(param));
-            System.out.println("What would you like to do with this reservation?\n\t<2>\tView Details\n\t<2>\tChange Date\n\t<3>\tCancel Reservation\n");
+            System.out.println("What would you like to do with this reservation?\n\t<1>\tView Details\n\t<2>\tChange Date\n\t<3>\tCancel Reservation\n");
             char opt = in.nextLine().charAt(0);
             switch (opt){
                 case ('1'):
@@ -233,5 +236,21 @@ public class RestaurantSystem {
                 return choices.get(param);
             }
         }
+    }
+    private void SaveAll() throws RuntimeException{
+        try (PrintWriter outRest = new PrintWriter("restaurants.csv")){
+            for (Restaurant restaurant: restaurants){
+                outRest.print(restaurant.toCSV());
+                try (PrintWriter outResv = new PrintWriter(restaurant.getId().toLowerCase()+"_reservations.csv")){
+                    for (Reservation reservation: restaurant.getReservations()){
+                        outResv.print(reservation.toCSV());
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }
