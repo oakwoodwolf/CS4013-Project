@@ -113,7 +113,7 @@ public class RestaurantSystem {
         while (running)
         {
             System.out.println("Enter the number of your desired option:");
-            System.out.println("<1>: Search For Tables\t<2>: Check Reservations\t<3>: Check Reservations");
+            System.out.println("<1>: Book a Reservation\t<2>: Check Reservations\t<3>: Your Reservations");
             String command = in.nextLine();
             switch (command) {
                 case ("1") -> System.out.println(newlist);
@@ -138,7 +138,7 @@ public class RestaurantSystem {
                         }
                     }
                 }
-                case ("3") -> System.out.println("");
+                case ("3") -> checkYourReservations();
                 default -> {
                     running = false;
                     System.out.println("Exiting. Thank you for visiting Yum!");
@@ -147,6 +147,23 @@ public class RestaurantSystem {
                 }
             }
         }
+    }
+
+    private void checkYourReservations() {
+        System.out.println("Enter your customer ID:");
+        String id = in.nextLine();
+        ArrayList<Object> yourReservations = new ArrayList<>();
+        for (Restaurant restaurant: restaurants){
+            for (Reservation reservation: restaurant.getReservations()){
+                if (reservation.getCustomerID() == Integer.parseInt(id)){
+                    yourReservations.add(reservation);
+                }
+            }
+        }
+        if (!yourReservations.isEmpty()){
+            System.out.println("You have the following reservations:\n\tSelect the number to view");
+            choose(yourReservations);
+        } else System.out.println("You have no reservations. Want to make one?");
     }
 
     public boolean exists(String str){
@@ -160,5 +177,25 @@ public class RestaurantSystem {
 
     public ArrayList<Restaurant> getRestaurants() {
         return restaurants;
+    }
+
+    /**
+     * A non-specific choice machine. An arraylist of any object can be turned into a selection through this
+     * @param choices the arraylist to grab options from
+     * @return Object to choose.
+     */
+    private Object choose(ArrayList<Object> choices){
+        if (choices.isEmpty()) return null;
+        while (true){
+            int opt = 0;
+            for (Object choice : choices){
+                System.out.println(opt + ">\t" + choice.toString());
+                opt++;
+            }
+            int param = Integer.parseInt(in.nextLine());
+            if (0 <= param  && param < choices.size()){
+                return choices.get(param);
+            }
+        }
     }
 }

@@ -111,6 +111,9 @@ public class Restaurant {
         }
         return reserves;
     }
+    public ArrayList<Reservation> getReservations(){
+        return reservations;
+    }
     /**
      *
      */
