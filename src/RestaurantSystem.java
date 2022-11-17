@@ -2,6 +2,8 @@ package src;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -26,18 +28,18 @@ public class RestaurantSystem {
             String[] splitter = temp.split(",");
             csvContents.add(splitter);
         }
-        for (int i = 0; i < csvContents.size(); i++){
-            String restaurantID = csvContents.get(i)[0];
-            int tableNo = Integer.parseInt(csvContents.get(i)[1]);
-            int capacity = Integer.parseInt(csvContents.get(i)[2]);
-            if (!exists(restaurantID)){
+        for (String[] csvContent : csvContents) {
+            String restaurantID = csvContent[0];
+            int tableNo = Integer.parseInt(csvContent[1]);
+            int capacity = Integer.parseInt(csvContent[2]);
+            if (!exists(restaurantID)) {
                 Restaurant res = new Restaurant(restaurantID, capacity);
-                res.addTable(tableNo,capacity);
+                res.addTable(tableNo, capacity);
                 restaurants.add(res);
             } else {
-                for (int j = 0; j < restaurants.size(); j++){
-                    if (restaurants.get(j).getId().contains(restaurantID)){
-                        restaurants.get(j).addTable(tableNo, capacity);
+                for (Restaurant restaurant : restaurants) {
+                    if (restaurant.getId().contains(restaurantID)) {
+                        restaurant.addTable(tableNo, capacity);
                     }
                 }
             }
@@ -55,16 +57,30 @@ public class RestaurantSystem {
         while (running)
         {
             System.out.println("Enter the number of your desired option:");
-            System.out.println("<1>: Search For Tables\t<2>: Make Reservation\t<3>: Exit");
+            System.out.println("<1>: Search For Tables\t<2>: Make Reservation\t<3>: Check Reservations");
             String command = in.nextLine();
             switch (command){
                 case ("1") :
                     System.out.println(newlist);
                     break;
                 case ("2") :
-                    System.out.println("Not implemented yet");
+                    System.out.println("Please enter the day: YYYY/MM/DD");
+                    String line = in.nextLine();
+                    LocalDate date;
+                    if (!line.contentEquals("")){
+                        String[] lineSplit = line.split("/");
+                        int year =Integer.parseInt(lineSplit[0]) ;
+                        int month =Integer.parseInt(lineSplit[1]) ;
+                        int day =Integer.parseInt(lineSplit[2]) ;
+                        date = LocalDate.of(year, month, day);
+                    } else {
+                        date = LocalDate.now();
+                    }
                     break;
                 case ("3") :
+                    running = false;
+                    break;
+                default:
                     running = false;
                     break;
             }
