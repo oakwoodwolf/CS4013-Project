@@ -12,10 +12,7 @@ public class Reservation {
     public int NoOfPeople; // Number of people
     int TableId; // table number
 
-    public static void main(String[] args) {
-    }
-
-    public void MakeReservation(String Name, int CustomerID, int noOfPeople, int phoneNumber, int tableId) {
+    public void Reservation(String Name, int CustomerID, int noOfPeople, int phoneNumber, int tableId) {
         this.name = Name;
         this.CustomerId = CustomerID;
         this.NoOfPeople = noOfPeople;
