@@ -5,10 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class RestaurantSystem {
@@ -91,8 +89,8 @@ public class RestaurantSystem {
             String reservationID = csvContent[0];
             int numberOfPeople = Integer.parseInt(csvContent[1]);
             String[] dateTemp = csvContent[2].split("-");
-            LocalDate date = LocalDate.of(2000+(Integer.parseInt(dateTemp[2])),Integer.parseInt(dateTemp[1]),Integer.parseInt(dateTemp[0]));
-            String[] timeTemp = csvContent[3].split("\\.");
+            LocalDate date = LocalDate.of(2000+(Integer.parseInt(dateTemp[0])),Integer.parseInt(dateTemp[1]),Integer.parseInt(dateTemp[2]));
+            String[] timeTemp = csvContent[3].split(":");
             String minutesTemp = timeTemp[1].substring(0,1);
             LocalTime time = LocalTime.of(Integer.parseInt(timeTemp[0]),Integer.parseInt(minutesTemp));
             int tableNo = Integer.parseInt(csvContent[4]);
@@ -109,7 +107,7 @@ public class RestaurantSystem {
     /**
      * This runs the menu of the program, serving as the text interface
      */
-    public void run()
+    public void run() throws StringIndexOutOfBoundsException
     {
         boolean running = true;
         ArrayList<Restaurant> newlist = getRestaurants();
@@ -117,29 +115,40 @@ public class RestaurantSystem {
         {
             System.out.println("\nEnter the number of your desired option:");
             System.out.println("\t<1>: Book a Reservation\n\t<2>: Check Reservations\n\t<3>: Your Reservations");
-            char command = in.nextLine().charAt(0);
+            String command = String.valueOf(in.nextLine().charAt(0));
             switch (command) {
-                case ('1') -> System.out.println(newlist);
-                case ('2') -> CheckAllReservations();
-                case ('3') -> checkYourReservations();
-                default -> {
-                    running = false;
-                    System.out.println("Saving.");
-                    SaveAll();
-                    System.out.println("Exiting. Thank you for visiting Yum!");
-                    resScan.close();
-                    in.close();
-                }
+                case ("1") -> bookAReservation();
+                case ("2") -> CheckAllReservations();
+                case ("3") -> checkYourReservations();
+                default -> running = exitMenu();
             }
         }
     }
 
+    /**
+     * Exits the menu if any option that isn't shown is selected
+     * @return a boolean to tell the program the menu has been exited
+     */
+    private boolean exitMenu() {
+        boolean running;
+        running = false;
+        System.out.println("Saving.");
+        SaveAll();
+        System.out.println("Exiting. Thank you for visiting Yum!");
+        resScan.close();
+        in.close();
+        return running;
+    }
+
+    /**
+     * Checks all reservations in every restaurant by day
+     */
     private void CheckAllReservations() {
-        System.out.println("Please enter the day: YYYY/MM/DD");
+        System.out.println("Please enter the day: YYYY-MM-DD");
         String line = in.nextLine();
         LocalDate date;
         if (!line.contentEquals("")) {
-            String[] lineSplit = line.split("/-");
+            String[] lineSplit = line.split("-");
             System.out.println(Arrays.toString(lineSplit));
             int year = Integer.parseInt(lineSplit[0]);
             int month = Integer.parseInt(lineSplit[1]);
@@ -155,7 +164,9 @@ public class RestaurantSystem {
             }
         }
     }
+    private void bookAReservation(){
 
+    }
     private void checkYourReservations() {
         System.out.println("Enter your customer ID:");
         String id = in.nextLine();
