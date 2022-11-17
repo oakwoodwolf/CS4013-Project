@@ -119,27 +119,7 @@ public class RestaurantSystem {
             char command = in.nextLine().charAt(0);
             switch (command) {
                 case ('1') -> System.out.println(newlist);
-                case ('2') -> {
-                    System.out.println("Please enter the day: YYYY/MM/DD");
-                    String line = in.nextLine();
-                    LocalDate date;
-                    if (!line.contentEquals("")) {
-                        String[] lineSplit = line.split("/");
-                        System.out.println(Arrays.toString(lineSplit));
-                        int year = Integer.parseInt(lineSplit[0]);
-                        int month = Integer.parseInt(lineSplit[1]);
-                        int day = Integer.parseInt(lineSplit[2]);
-                        date = LocalDate.of(year, month, day);
-                    } else {
-                        date = LocalDate.now();
-                    }
-                    for (Restaurant restaurant : restaurants) {
-                        ArrayList<Reservation> currentReservations = restaurant.getReservations(date);
-                        if (!currentReservations.isEmpty()){
-                            System.out.println(restaurant.getId() + ": " + currentReservations);
-                        }
-                    }
-                }
+                case ('2') -> CheckAllReservations();
                 case ('3') -> checkYourReservations();
                 default -> {
                     running = false;
@@ -147,6 +127,28 @@ public class RestaurantSystem {
                     resScan.close();
                     in.close();
                 }
+            }
+        }
+    }
+
+    private void CheckAllReservations() {
+        System.out.println("Please enter the day: YYYY/MM/DD");
+        String line = in.nextLine();
+        LocalDate date;
+        if (!line.contentEquals("")) {
+            String[] lineSplit = line.split("/");
+            System.out.println(Arrays.toString(lineSplit));
+            int year = Integer.parseInt(lineSplit[0]);
+            int month = Integer.parseInt(lineSplit[1]);
+            int day = Integer.parseInt(lineSplit[2]);
+            date = LocalDate.of(year, month, day);
+        } else {
+            date = LocalDate.now();
+        }
+        for (Restaurant restaurant : restaurants) {
+            ArrayList<Reservation> currentReservations = restaurant.getReservations(date);
+            if (!currentReservations.isEmpty()){
+                System.out.println(restaurant.getId() + ": " + currentReservations);
             }
         }
     }
@@ -166,17 +168,26 @@ public class RestaurantSystem {
         }
         if (!yourReservations.isEmpty()){
             System.out.println("You have the following reservations coming up!\n\tSelect the number to view");
+            System.out.println("\tID\tCustomerID\tT\tSeats\tDate\tTime");
             Reservation reservation = (Reservation) choose(yourReservations);
             restaurants.get(param);
             System.out.println("You have selected Reservation " + reservation.getReservationID() + "\t in: " + restaurants.get(param));
-            System.out.println("What would you like to do with this reservation?\n\t<1>\tChange Date\n\t<2>\tCancel Reservation\n");
+            System.out.println("What would you like to do with this reservation?\n\t<2>\tView Details\n\t<2>\tChange Date\n\t<3>\tCancel Reservation\n");
             char opt = in.nextLine().charAt(0);
             switch (opt){
                 case ('1'):
-                    System.out.println("is the current date. What would you like to change it to?");
+                    System.out.println("\tID\tCustomerID\tT\tSeats\tDate\tTime");
+                    System.out.println(reservation);
+                    break;
+                case ('2'):
+                    System.out.println(reservation.getDate() + " is the current date. What would you like to change it to? (YYYY-MM-DD)");
+                    LocalDate temp = LocalDate.parse(in.nextLine());
+                    System.out.println(("Changing date from " + reservation.getDate() + " to " + temp));
+                    restaurants.get(param).editDate(temp, reservation);
+                    System.out.println("Done!");
                     break;
 
-                case ('2'):
+                case ('3'):
                     System.out.println("Please enter the reservation ID to confirm cancellation");
                     String confirm = in.nextLine();
                     if (reservation.getReservationID().contentEquals(confirm)){
@@ -212,12 +223,12 @@ public class RestaurantSystem {
     private Object choose(ArrayList<Object> choices){
         if (choices.isEmpty()) return null;
         while (true){
-            int opt = 0;
+            int opt = 1;
             for (Object choice : choices){
                 System.out.println(opt + ">\t" + choice.toString());
                 opt++;
             }
-            param = Integer.parseInt(in.nextLine());
+            param = Integer.parseInt(in.nextLine()) - 1;
             if (0 <= param  && param < choices.size()){
                 return choices.get(param);
             }

@@ -137,6 +137,13 @@ public class Restaurant {
             }
         }
     }
+    public void editDate(LocalDate date, Reservation in){
+        for (Reservation reservation: reservations){
+            if (in.getReservationID() == reservation.getReservationID()){
+                reservation.setLocalDate(date);
+            }
+        }
+    }
 
     public void setTaken(int tableNo){
         for (Table table: tables){

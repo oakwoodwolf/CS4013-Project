@@ -30,11 +30,16 @@ public class Reservation {
     public LocalDate getDate() {
         return LocalDate;
     }
+
+    public void setLocalDate(java.time.LocalDate localDate) {
+        LocalDate = localDate;
+    }
+
     public LocalTime getTime() {
         return LocalTime;
     }
     public String toString() {
-        return reservationID + "\t" + CustomerId + "\t" + NoOfPeople + "\t";
+        return reservationID + "\t" + CustomerId + "\t"+ TableId +"\t"+ NoOfPeople + "\t" + LocalDate + "\t" + LocalTime;
     }
 
     public int getTableId() {
