@@ -1,6 +1,7 @@
 package src;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Restaurant {
@@ -10,6 +11,7 @@ public class Restaurant {
 
     private Object menu = new Object();
     private ArrayList<Table> tables = new ArrayList<Table>();
+    private ArrayList<Reservation> reservations;
     private int seatsPerTable = 6;
 
     /*** No-args constructor for Restaurant. This sets the
@@ -18,6 +20,7 @@ public class Restaurant {
     public Restaurant(){
         id = "YUM00";
         capacity = 6;
+        reservations = new ArrayList<>();
 //        currentCapacity = capacity;
     }
 
@@ -29,6 +32,7 @@ public class Restaurant {
     public Restaurant(String id, int capacity){
         this.id = id;
         this.capacity = capacity;
+        reservations = new ArrayList<>();
         //currentCapacity = capacity;
     }
     public void addTable(int no, int capacity){
@@ -86,6 +90,25 @@ public class Restaurant {
         }
     }
 
+
+    /**
+     *
+     *
+     * @param date the date to check for reservations if the param is "d"
+     * @return the Reservations available under these requirements
+     */
+    public ArrayList<Reservation> getReservations(LocalDate date){
+        ArrayList<Reservation> reserves = new ArrayList<>();
+        if (reservations != null){
+            for (int i = 0; i < reservations.size(); i++){
+                LocalDate temp = reservations.get(i).getDate();
+                if (temp.isEqual(date)){
+                    reserves.add(reservations.get(i));
+                }
+            }
+        }
+        return reserves;
+    }
     /**
      * This makes a csv-ready ArrayList, with first value being restaurant id, 2nd being table no, and 3rd being seat count.
      * @return A line for the arraylist
