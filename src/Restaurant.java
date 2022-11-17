@@ -110,6 +110,20 @@ public class Restaurant {
         return reserves;
     }
     /**
+     *
+     */
+    public void setReservations(Reservation reservation){
+        reservations.add(reservation);
+    }
+
+    public void setTaken(int tableNo){
+        for (Table table: tables){
+            if (table.getTableNo() == tableNo){
+                table.setIsTaken(true);
+            }
+        }
+    }
+    /**
      * This makes a csv-ready ArrayList, with first value being restaurant id, 2nd being table no, and 3rd being seat count.
      * @return A line for the arraylist
      */

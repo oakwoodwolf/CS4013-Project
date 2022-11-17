@@ -13,11 +13,10 @@ public class Reservation {
     public int NoOfPeople; // Number of people
     int TableId; // table number
 
-    public void Reservation(String Name, int CustomerID, int noOfPeople, int phoneNumber, int tableId) {
+    public Reservation(String Name, int CustomerID, int noOfPeople, int tableId) {
         this.name = Name;
         this.CustomerId = CustomerID;
         this.NoOfPeople = noOfPeople;
-        this.PhoneNumber = phoneNumber;
         this.TableId = tableId;
     }
 
