@@ -4,17 +4,16 @@ import java.time.*;
 import java.util.Date;
 
 public class Reservation {
-    public String name;
-    public int PhoneNumber;
+    private String reservationID;
     private LocalDate LocalDate;
     private LocalTime LocalTime;
 
     public int CustomerId;
     public int NoOfPeople; // Number of people
-    int TableId; // table number
+    private int TableId; // table number
 
     public Reservation(String Name, int CustomerID, int noOfPeople, int tableId, LocalDate date, LocalTime time) {
-        this.name = Name;
+        this.reservationID = Name;
         this.CustomerId = CustomerID;
         this.NoOfPeople = noOfPeople;
         this.TableId = tableId;
@@ -22,6 +21,9 @@ public class Reservation {
         LocalTime = time;
     }
 
+    public String getReservationID(){
+        return reservationID;
+    }
     public int getCustomerID() {
         return this.CustomerId;
     }
@@ -32,8 +34,10 @@ public class Reservation {
         return LocalTime;
     }
     public String toString() {
-        return name + "\t" + CustomerId + "\t" + PhoneNumber + "\t" + NoOfPeople + "\t";
+        return reservationID + "\t" + CustomerId + "\t" + NoOfPeople + "\t";
     }
 
-
+    public int getTableId() {
+        return TableId;
+    }
 }

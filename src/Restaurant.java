@@ -69,7 +69,7 @@ public class Restaurant {
                 capacity += table.getSeats();
             }
         }
-        return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity;
+        return "Branch:\t" + id + "\tCapacity:\t" + capacity;
     }
     public void setTables(int tableNo, boolean taken){
         int temp = tableNo-1;
@@ -114,11 +114,28 @@ public class Restaurant {
     public ArrayList<Reservation> getReservations(){
         return reservations;
     }
-    /**
-     *
+    /**This lets you add a reservation to the ArrayList of this restaurant
+     * @param reservation the reservation to add
      */
     public void setReservations(Reservation reservation){
         reservations.add(reservation);
+    }
+
+    /**
+     * This cancels a reservation after confirmation. It also frees the table.
+     * @param reservation the reservation to cancel
+     */
+    public void cancelReservation(Reservation reservation){
+        for (Table table: tables){
+            if (table.getTableNo() == reservation.getTableId()){
+             table.setIsTaken(false);
+            }
+        }
+        for (int i = 0; i < reservations.size(); i++){
+            if (reservations.get(i).getReservationID() == reservation.getReservationID()){
+                reservations.remove(i);
+            }
+        }
     }
 
     public void setTaken(int tableNo){

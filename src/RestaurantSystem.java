@@ -18,6 +18,8 @@ public class RestaurantSystem {
     Scanner resScan = new Scanner(res);
     Scanner in;
 
+    int param;
+
     /**
      *  This starts up the Restaurant system, loading the csv files and creating classes from them
      * @throws FileNotFoundException if the .csv file cannot be found.
@@ -94,7 +96,7 @@ public class RestaurantSystem {
             LocalTime time = LocalTime.of(Integer.parseInt(timeTemp[0]),Integer.parseInt(minutesTemp));
             int tableNo = Integer.parseInt(csvContent[4]);
             int customerID = Integer.parseInt(csvContent[5]);
-            Reservation reservation = new Reservation(restaurant.getId(), customerID, numberOfPeople, tableNo, date, time);
+            Reservation reservation = new Reservation(reservationID, customerID, numberOfPeople, tableNo, date, time);
 
             restaurant.setReservations(reservation);
             restaurant.setTaken(tableNo);
@@ -112,12 +114,12 @@ public class RestaurantSystem {
         ArrayList<Restaurant> newlist = getRestaurants();
         while (running)
         {
-            System.out.println("Enter the number of your desired option:");
-            System.out.println("<1>: Book a Reservation\t<2>: Check Reservations\t<3>: Your Reservations");
-            String command = in.nextLine();
+            System.out.println("\nEnter the number of your desired option:");
+            System.out.println("\t<1>: Book a Reservation\n\t<2>: Check Reservations\n\t<3>: Your Reservations");
+            char command = in.nextLine().charAt(0);
             switch (command) {
-                case ("1") -> System.out.println(newlist);
-                case ("2") -> {
+                case ('1') -> System.out.println(newlist);
+                case ('2') -> {
                     System.out.println("Please enter the day: YYYY/MM/DD");
                     String line = in.nextLine();
                     LocalDate date;
@@ -138,7 +140,7 @@ public class RestaurantSystem {
                         }
                     }
                 }
-                case ("3") -> checkYourReservations();
+                case ('3') -> checkYourReservations();
                 default -> {
                     running = false;
                     System.out.println("Exiting. Thank you for visiting Yum!");
@@ -153,17 +155,40 @@ public class RestaurantSystem {
         System.out.println("Enter your customer ID:");
         String id = in.nextLine();
         ArrayList<Object> yourReservations = new ArrayList<>();
+        ArrayList<Restaurant> chosenRestaurants = new ArrayList<>();
         for (Restaurant restaurant: restaurants){
             for (Reservation reservation: restaurant.getReservations()){
                 if (reservation.getCustomerID() == Integer.parseInt(id)){
                     yourReservations.add(reservation);
+                    chosenRestaurants.add(restaurant);
                 }
             }
         }
         if (!yourReservations.isEmpty()){
-            System.out.println("You have the following reservations:\n\tSelect the number to view");
-            choose(yourReservations);
-        } else System.out.println("You have no reservations. Want to make one?");
+            System.out.println("You have the following reservations coming up!\n\tSelect the number to view");
+            Reservation reservation = (Reservation) choose(yourReservations);
+            restaurants.get(param);
+            System.out.println("You have selected Reservation " + reservation.getReservationID() + "\t in: " + restaurants.get(param));
+            System.out.println("What would you like to do with this reservation?\n\t<1>\tChange Date\n\t<2>\tCancel Reservation\n");
+            char opt = in.nextLine().charAt(0);
+            switch (opt){
+                case ('1'):
+                    System.out.println("is the current date. What would you like to change it to?");
+                    break;
+
+                case ('2'):
+                    System.out.println("Please enter the reservation ID to confirm cancellation");
+                    String confirm = in.nextLine();
+                    if (reservation.getReservationID().contentEquals(confirm)){
+                        restaurants.get(param).cancelReservation(reservation);
+                        System.out.println("Reservation cancelled");
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+        } else System.out.println("You have no reservations coming up. Want to make one?");
     }
 
     public boolean exists(String str){
@@ -192,7 +217,7 @@ public class RestaurantSystem {
                 System.out.println(opt + ">\t" + choice.toString());
                 opt++;
             }
-            int param = Integer.parseInt(in.nextLine());
+            param = Integer.parseInt(in.nextLine());
             if (0 <= param  && param < choices.size()){
                 return choices.get(param);
             }
