@@ -110,7 +110,6 @@ public class RestaurantSystem {
     public void run() throws StringIndexOutOfBoundsException
     {
         boolean running = true;
-        ArrayList<Restaurant> newlist = getRestaurants();
         while (running)
         {
             System.out.println("\nEnter the number of your desired option:");
@@ -165,18 +164,40 @@ public class RestaurantSystem {
         }
     }
     private void bookAReservation(){
+        System.out.println("Select a Restaurant");
+        Restaurant restaurant = chooseRestaurants(restaurants);
+        System.out.println("Choose a date you want to book for: YYYY-MM-DD");
+        LocalDate date = LocalDate.parse(in.nextLine());
+        Table table = chooseTable(restaurant.pullTables(true));
+        System.out.println("Please supply the following information:\n\tNumber of People\tTime\t");
+        System.out.println("Example: 2 15:30");
+        String info = in.nextLine();
+        String[] bits = info.split(" ");
+        int numberofPeople = Integer.parseInt(bits[0]);
+        if (numberofPeople > table.getSeats()) {
+            System.out.println("You have too many people. Please consider booking seperately.");
+        } else {
+            LocalTime time = LocalTime.parse(bits[1]);
+            int temp = (restaurant.getReservations().size() + 1);
+            String id = Integer.toString(temp);
+            Reservation reserve = new Reservation(id, (int) ((Math.random() *90)+ 1000), numberofPeople, table.getTableNo(), date, time);
+            System.out.println("Are you okay with this booking?\n" + reserve + "\n<Y>\t\t\t<N>");
+            String option = in.nextLine();
+            if (option.contentEquals("Y")){
+                restaurant.setReservations(reserve);
+                System.out.println("Your booking has been confirmed!\tReservation ID:\t\t\t" + reserve.getReservationID());
+            } else System.out.println("Your booking has been cancelled");
+        }
 
     }
     private void checkYourReservations() {
         System.out.println("Enter your customer ID:");
         String id = in.nextLine();
         ArrayList<Object> yourReservations = new ArrayList<>();
-        ArrayList<Restaurant> chosenRestaurants = new ArrayList<>();
         for (Restaurant restaurant: restaurants){
             for (Reservation reservation: restaurant.getReservations()){
                 if (reservation.getCustomerID() == Integer.parseInt(id)){
                     yourReservations.add(reservation);
-                    chosenRestaurants.add(restaurant);
                 }
             }
         }
@@ -184,38 +205,40 @@ public class RestaurantSystem {
             System.out.println("You have the following reservations coming up!\n\tSelect the number to view");
             System.out.println("\tID\tCustomerID\tT\tSeats\tDate\tTime");
             Reservation reservation = (Reservation) choose(yourReservations);
-            restaurants.get(param);
             System.out.println("You have selected Reservation " + reservation.getReservationID() + "\t in: " + restaurants.get(param));
             System.out.println("What would you like to do with this reservation?\n\t<1>\tView Details\n\t<2>\tChange Date\n\t<3>\tCancel Reservation\n");
             char opt = in.nextLine().charAt(0);
-            switch (opt){
-                case ('1'):
+            switch (opt) {
+                case ('1') -> {
                     System.out.println("\tID\tCustomerID\tT\tSeats\tDate\tTime");
                     System.out.println(reservation);
-                    break;
-                case ('2'):
+                }
+                case ('2') -> {
                     System.out.println(reservation.getDate() + " is the current date. What would you like to change it to? (YYYY-MM-DD)");
                     LocalDate temp = LocalDate.parse(in.nextLine());
                     System.out.println(("Changing date from " + reservation.getDate() + " to " + temp));
                     restaurants.get(param).editDate(temp, reservation);
                     System.out.println("Done!");
-                    break;
-
-                case ('3'):
+                }
+                case ('3') -> {
                     System.out.println("Please enter the reservation ID to confirm cancellation");
                     String confirm = in.nextLine();
-                    if (reservation.getReservationID().contentEquals(confirm)){
+                    if (reservation.getReservationID().contentEquals(confirm)) {
                         restaurants.get(param).cancelReservation(reservation);
                         System.out.println("Reservation cancelled");
                     }
-                    break;
-                default:
-                    break;
-
+                }
+                default -> {
+                }
             }
         } else System.out.println("You have no reservations coming up. Want to make one?");
     }
 
+    /**
+     * Checks if something containing this string exists
+     * @param str the string to compare
+     * @return boolean whether it exists or not
+     */
     public boolean exists(String str){
         for (Restaurant restaurant : restaurants) {
             if (restaurant.getId().contains(str)) {
@@ -223,10 +246,6 @@ public class RestaurantSystem {
             }
         }
         return false;
-    }
-
-    public ArrayList<Restaurant> getRestaurants() {
-        return restaurants;
     }
 
     /**
@@ -248,6 +267,41 @@ public class RestaurantSystem {
             }
         }
     }
+    private Table chooseTable(ArrayList<Table> choices){
+        if (choices.isEmpty()) return null;
+        while (true){
+            int opt = 1;
+            for (Object choice : choices){
+                System.out.println(opt + ">\t" + choice.toString());
+                opt++;
+            }
+            param = Integer.parseInt(in.nextLine()) - 1;
+            if (0 <= param  && param < choices.size()){
+                return choices.get(param);
+            }
+        }
+    }
+    /**
+     *
+     * @param choices the arraylist to choose from
+     * @see Object choose(ArrayList<Object> choices)
+     * @return the chosen restaurant
+     */
+    private Restaurant chooseRestaurants(ArrayList<Restaurant> choices){
+        if (choices.isEmpty()) return null;
+        while (true){
+            int opt = 1;
+            for (Object choice : choices){
+                System.out.println(opt + ">\t" + choice.toString());
+                opt++;
+            }
+            param = Integer.parseInt(in.nextLine()) - 1;
+            if (0 <= param  && param < choices.size()){
+                return choices.get(param);
+            }
+        }
+    }
+
     private void SaveAll() throws RuntimeException{
         try (PrintWriter outRest = new PrintWriter("restaurants.csv")){
             for (Restaurant restaurant: restaurants){

@@ -1,6 +1,5 @@
 package src;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -92,6 +91,23 @@ public class Restaurant {
         }
     }
 
+    /**
+     * This is ListTables but instead outputs an ArrayList
+     * @param hideBooked if true, hides booked Tables
+     * @return a list of free tables
+     */
+    public ArrayList<Table> pullTables(boolean hideBooked){
+        ArrayList<Table> out = new ArrayList<>();
+        if (hideBooked){
+            for (Table table : tables) {
+                if (!table.isTaken()) out.add(table);
+            }
+        } else {
+            out.addAll(tables);
+        }
+        return out;
+    }
+
 
     /**
      *This checks all the reservations for a given day.
@@ -166,23 +182,3 @@ public class Restaurant {
     }
 
 }
-/**
- * an old test class to test outputting to CSV
- * */
-// class Test {
-//    public static void main (String[] args){
-//        File file = new File("restaurants.csv");
-//        try (FileReader reader = new FileReader(file);){
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        Restaurant YumPortumna = new Restaurant("YumPr5", 6);
-//        System.out.print(YumPortumna.toCSV());
-//        try (PrintWriter out = new PrintWriter("restaurants.csv")){
-//            out.println(YumPortumna.toCSV());
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//}
