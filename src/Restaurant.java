@@ -64,8 +64,10 @@ public class Restaurant {
     public String toString()
     {
         int capacity = 0;
-        for (int l = 0; l < tables.size(); l++){
-            capacity += tables.get(l).getSeats();
+        for (Table table : tables) {
+            if (!table.isTaken()) {
+                capacity += table.getSeats();
+            }
         }
         return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity;
     }

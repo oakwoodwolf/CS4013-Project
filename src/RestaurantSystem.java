@@ -34,6 +34,7 @@ public class RestaurantSystem {
     }
 
     private void LoadRestaurants(ArrayList<String[]> csvContents) {
+        System.out.println("Loading Restaurants");
         while(resScan.hasNextLine()){
             String temp = resScan.nextLine();
             //System.out.println(temp);
@@ -57,6 +58,7 @@ public class RestaurantSystem {
                 }
             }
         }
+        System.out.println("Loaded!");
     }
 
     /**
@@ -67,11 +69,12 @@ public class RestaurantSystem {
      */
     private void LoadReservations(ArrayList<String[]> csvContents, Restaurant restaurant) throws FileNotFoundException {
 
+        System.out.println("Loading Reservation for " + restaurant);
         csvContents.clear();
-        resV = new FileInputStream(restaurant.getId()+"_reservations.csv");
+        resV = new FileInputStream(restaurant.getId().toLowerCase()+"_reservations.csv");
         Scanner resVScan = new Scanner(resV);
         while(resVScan.hasNextLine()){
-            String temp = resScan.nextLine();
+            String temp = resVScan.nextLine();
             //System.out.println(temp);
             String[] splitter = temp.split(",");
             csvContents.add(splitter);
@@ -82,13 +85,17 @@ public class RestaurantSystem {
             int numberOfPeople = Integer.parseInt(csvContent[1]);
             String[] dateTemp = csvContent[2].split("/");
             LocalDate date = LocalDate.of(Integer.parseInt(dateTemp[2]),Integer.parseInt(dateTemp[1]),Integer.parseInt(dateTemp[0]));
-            LocalTime time = LocalTime.parse(csvContent[3]);
+            String[] timeTemp = csvContent[3].split("\\.");
+            String minutesTemp = timeTemp[1].substring(0,1);
+            LocalTime time = LocalTime.of(Integer.parseInt(timeTemp[0]),Integer.parseInt(minutesTemp));
             int tableNo = Integer.parseInt(csvContent[4]);
             int customerID = Integer.parseInt(csvContent[5]);
             Reservation reservation = new Reservation(restaurant.getId(), customerID, numberOfPeople, tableNo);
+
             restaurant.setReservations(reservation);
             restaurant.setTaken(tableNo);
         }
+        System.out.println("Loaded");
         resVScan.close();
     }
 
