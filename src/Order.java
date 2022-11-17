@@ -8,7 +8,7 @@ public class Order {
   char status;
 
   public Bill createBill(){
-    
+    return new Bill(totalCost, "Card", 0);
   }
 
   public double getTotalCost(){
@@ -20,5 +20,6 @@ public class Order {
   }
 
   public String toString(){
+    return "";
   }
 }

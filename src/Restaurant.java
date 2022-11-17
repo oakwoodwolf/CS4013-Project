@@ -92,9 +92,9 @@ public class Restaurant {
 
 
     /**
+     *This checks all the reservations for a given day.
      *
-     *
-     * @param date the date to check for reservations if the param is "d"
+     * @param date the date to check for reservations
      * @return the Reservations available under these requirements
      */
     public ArrayList<Reservation> getReservations(LocalDate date){
