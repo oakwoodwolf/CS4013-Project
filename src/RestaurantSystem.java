@@ -78,7 +78,7 @@ public class RestaurantSystem {
                     }
                     break;
                 case ("3") :
-                    running = false;
+                    System.out.println("");
                     break;
                 default:
                     running = false;

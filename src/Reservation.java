@@ -1,11 +1,12 @@
 package src;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Reservation {
     public String name;
     public int PhoneNumber;
-    public Date LocalDate;
+    public LocalDate LocalDate;
     public Time LocalTime;
 
     public int CustomerId;
@@ -23,7 +24,7 @@ public class Reservation {
     public int getCustomerID() {
         return this.CustomerId;
     }
-    public Date getDate() {
+    public LocalDate getDate() {
         return LocalDate;
     }
     public String toString() {
