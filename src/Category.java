@@ -13,7 +13,6 @@ public class Category {
     private boolean newItem;
 
 
-
     //ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<ArrayList<Item>> items;
 
