@@ -1,6 +1,6 @@
 package src;
 
-import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Restaurant {
@@ -10,6 +10,7 @@ public class Restaurant {
 
     private Object menu = new Object();
     private ArrayList<Table> tables = new ArrayList<Table>();
+    private ArrayList<Reservation> reservations;
     private int seatsPerTable = 6;
 
     /*** No-args constructor for Restaurant. This sets the
@@ -18,6 +19,7 @@ public class Restaurant {
     public Restaurant(){
         id = "YUM00";
         capacity = 6;
+        reservations = new ArrayList<>();
 //        currentCapacity = capacity;
     }
 
@@ -29,6 +31,7 @@ public class Restaurant {
     public Restaurant(String id, int capacity){
         this.id = id;
         this.capacity = capacity;
+        reservations = new ArrayList<>();
         //currentCapacity = capacity;
     }
     public void addTable(int no, int capacity){
@@ -57,8 +60,15 @@ public class Restaurant {
      * This returns the Restaurant class in String form.
      * @return the Restaurant Summary as a String
      */
-    public String toString(){
-        return "Restaurant Branch:\t" + id + "\tCapacity:\t" + capacity;
+    public String toString()
+    {
+        int capacity = 0;
+        for (Table table : tables) {
+            if (!table.isTaken()) {
+                capacity += table.getSeats();
+            }
+        }
+        return "Branch:\t" + id + "\tCapacity:\t" + capacity;
     }
     public void setTables(int tableNo, boolean taken){
         int temp = tableNo-1;
@@ -82,6 +92,83 @@ public class Restaurant {
     }
 
     /**
+     * This is ListTables but instead outputs an ArrayList
+     * @param hideBooked if true, hides booked Tables
+     * @return a list of free tables
+     */
+    public ArrayList<Table> pullTables(boolean hideBooked){
+        ArrayList<Table> out = new ArrayList<>();
+        if (hideBooked){
+            for (Table table : tables) {
+                if (!table.isTaken()) out.add(table);
+            }
+        } else {
+            out.addAll(tables);
+        }
+        return out;
+    }
+
+
+    /**
+     *This checks all the reservations for a given day.
+     *
+     * @param date the date to check for reservations
+     * @return the Reservations available under these requirements
+     */
+    public ArrayList<Reservation> getReservations(LocalDate date){
+        ArrayList<Reservation> reserves = new ArrayList<>();
+        if (reservations != null){
+            for (int i = 0; i < reservations.size(); i++){
+                LocalDate temp = reservations.get(i).getDate();
+                if (temp.isEqual(date)){
+                    reserves.add(reservations.get(i));
+                }
+            }
+        }
+        return reserves;
+    }
+    public ArrayList<Reservation> getReservations(){
+        return reservations;
+    }
+    /**This lets you add a reservation to the ArrayList of this restaurant
+     * @param reservation the reservation to add
+     */
+    public void setReservations(Reservation reservation){
+        reservations.add(reservation);
+    }
+
+    /**
+     * This cancels a reservation after confirmation. It also frees the table.
+     * @param reservation the reservation to cancel
+     */
+    public void cancelReservation(Reservation reservation){
+        for (Table table: tables){
+            if (table.getTableNo() == reservation.getTableId()){
+             table.setIsTaken(false);
+            }
+        }
+        for (int i = 0; i < reservations.size(); i++){
+            if (reservations.get(i).getReservationID() == reservation.getReservationID()){
+                reservations.remove(i);
+            }
+        }
+    }
+    public void editDate(LocalDate date, Reservation in){
+        for (Reservation reservation: reservations){
+            if (in.getReservationID() == reservation.getReservationID()){
+                reservation.setLocalDate(date);
+            }
+        }
+    }
+
+    public void setTaken(int tableNo){
+        for (Table table: tables){
+            if (table.getTableNo() == tableNo){
+                table.setIsTaken(true);
+            }
+        }
+    }
+    /**
      * This makes a csv-ready ArrayList, with first value being restaurant id, 2nd being table no, and 3rd being seat count.
      * @return A line for the arraylist
      */
@@ -94,22 +181,4 @@ public class Restaurant {
         return temp.toString();
     }
 
-}
-
- class Test {
-    public static void main (String[] args){
-        File file = new File("restaurants.csv");
-        try (FileReader reader = new FileReader(file);){
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Restaurant YumPortumna = new Restaurant("YumPr5", 6);
-        System.out.print(YumPortumna.toCSV());
-        try (PrintWriter out = new PrintWriter("restaurants.csv")){
-            out.println(YumPortumna.toCSV());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
