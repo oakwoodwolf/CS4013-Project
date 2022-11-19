@@ -11,14 +11,13 @@ public class Category {
     private double price;
 
     private boolean newItem;
+    private ArrayList<Item> items = new ArrayList<>();
 
 
-    //ArrayList<Item> items = new ArrayList<Item>();
-    private ArrayList<ArrayList<Item>> items;
+    public Category(String name){
+        this.name = name;
+    }
 
-    //ArrayList<Meal> meals = new ArrayList<Meal>();
-    private ArrayList<Meal> meals;
-    private ArrayList<Item> item;
 
     public void makeMeal(String name, String side, String main, String drink){
         this.name = name;
@@ -28,13 +27,22 @@ public class Category {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
     public void addItem(String name, double price){
-        Item newItem = new Item( name, price);
-        item.add(newItem);
+        Item newItem = new Item(name,price);
+        System.out.println("\t\tAdding " + newItem.getName() + " to " + this.getName());
+        items.add(newItem);
     }
 
     public void removeItem(){
-        item.clear();
+        items.clear();
     }
 
 

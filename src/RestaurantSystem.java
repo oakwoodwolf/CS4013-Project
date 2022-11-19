@@ -30,8 +30,7 @@ public class RestaurantSystem {
         LoadRestaurants(csvContents);
         for (Restaurant restaurant : restaurants){
             LoadReservations(csvContents, restaurant);
-
-
+            LoadMenu(csvContents, restaurant);
         }
     }
 
@@ -99,6 +98,55 @@ public class RestaurantSystem {
 
             restaurant.setReservations(reservation);
             restaurant.setTaken(tableNo);
+        }
+        System.out.println("Loaded");
+        resVScan.close();
+    }
+
+    /**
+     * This loads the menu, categories and items of the restaurant.
+     * @param csvContents
+     * @param restaurant the restaurant the menu is for
+     * @throws FileNotFoundException
+     */
+    private void LoadMenu(ArrayList<String[]> csvContents, Restaurant restaurant) throws FileNotFoundException {
+
+        System.out.println("Loading Menu for " + restaurant);
+        csvContents.clear();
+        ArrayList<Category> categories = new ArrayList<>();
+        Menu menu = new Menu();
+        resV = new FileInputStream(restaurant.getId().toLowerCase()+"_menu.csv");
+        Scanner resVScan = new Scanner(resV);
+        while(resVScan.hasNextLine()){
+            String temp = resVScan.nextLine();
+            //System.out.println(temp);
+            String[] splitter = temp.split(",");
+            csvContents.add(splitter);
+        }
+
+        for (String[] csvContent : csvContents) {
+            String category = csvContent[0];
+            String item = csvContent[1];
+            double price = Double.parseDouble(csvContent[2]);
+            if (csvContent.length > 3){
+                String content1 = csvContent[3];
+                String content2 = csvContent[4];
+                String content3 = csvContent[5];
+            }
+
+            if (!exists(category,categories)) {
+                categories.add(new Category(category));
+                System.out.println("\tCreated new category " + category);
+            }
+
+            for (Category category1: categories){
+                if (category1.getName().contentEquals(category)){
+                    category1.addItem(item,price);
+                }
+
+            }
+            menu.setItems(categories);
+            restaurant.setMenu(menu);
         }
         System.out.println("Loaded");
         resVScan.close();
@@ -248,6 +296,14 @@ public class RestaurantSystem {
         return false;
     }
 
+    public boolean exists(String str, ArrayList<Category> categories){
+        for (Category category : categories) {
+            if (category.getName().contains(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * A non-specific choice machine. An arraylist of any object can be turned into a selection through this
      * @param choices the arraylist to grab options from

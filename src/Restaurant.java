@@ -8,7 +8,7 @@ public class Restaurant {
     public int capacity;
 //    private int currentCapacity;
 
-    private Object menu = new Object();
+    private Menu menu = new Menu();
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Reservation> reservations;
     private int seatsPerTable = 6;
@@ -135,6 +135,10 @@ public class Restaurant {
      */
     public void setReservations(Reservation reservation){
         reservations.add(reservation);
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     /**

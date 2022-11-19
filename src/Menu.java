@@ -9,21 +9,27 @@ public class Menu {
 
 
     //ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<Item> items;
+    private ArrayList<Category> items;
 
-    public Menu(ArrayList<Item> items) throws FileNotFoundException {
+    public Menu(ArrayList<Category> items) throws FileNotFoundException {
         this.items = items;
     }
-
-    String path = "\"C:\\Users\\keith\\Downloads\\Menu.csv\"";
-    String line = "";
-
-    try{
-    BufferedReader reader = new BufferedReader(new FileReader(path));
-
-
+    public Menu(){
 
     }
+
+    public void setItems(ArrayList<Category> items) {
+        this.items = items;
+    }
+    //    String path = "\"C:\\Users\\keith\\Downloads\\Menu.csv\"";
+//    String line = "";
+//
+//    try{
+//    BufferedReader reader = new BufferedReader(new FileReader(path));
+//
+//
+//
+//    }
 
 
 
