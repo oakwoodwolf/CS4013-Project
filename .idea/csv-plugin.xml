@@ -31,7 +31,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\yumcastletroy_menu.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\yumcastletroy_reservations.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\yumportumna_menu.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

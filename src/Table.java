@@ -4,6 +4,7 @@ public class Table {
     private int seats;
     public int tableNo = 0;
     private boolean isTaken;
+    private Order order;
     public Table(){
 
     }
@@ -15,6 +16,13 @@ public class Table {
     public void setIsTaken(boolean taken){
         isTaken = taken;
 
+    }
+    public void setOrder(Order order){
+        this.order = order;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     /**
