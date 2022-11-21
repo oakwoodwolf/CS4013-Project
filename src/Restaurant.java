@@ -140,6 +140,9 @@ public class Restaurant {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
+    public Menu getMenu(){
+        return menu;
+    }
 
     /**
      * This cancels a reservation after confirmation. It also frees the table.

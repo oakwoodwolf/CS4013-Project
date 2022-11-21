@@ -21,6 +21,10 @@ public class Menu {
     public void setItems(ArrayList<Category> items) {
         this.items = items;
     }
+
+    public ArrayList<Category> getItems() {
+        return items;
+    }
     //    String path = "\"C:\\Users\\keith\\Downloads\\Menu.csv\"";
 //    String line = "";
 //

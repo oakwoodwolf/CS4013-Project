@@ -254,7 +254,7 @@ public class RestaurantSystem {
             System.out.println("\tID\tCustomerID\tT\tSeats\tDate\tTime");
             Reservation reservation = (Reservation) choose(yourReservations);
             System.out.println("You have selected Reservation " + reservation.getReservationID() + "\t in: " + restaurants.get(param));
-            System.out.println("What would you like to do with this reservation?\n\t<1>\tView Details\n\t<2>\tChange Date\n\t<3>\tCancel Reservation\n");
+            System.out.println("What would you like to do with this reservation?\n\t<1>\tView Details\n\t<2>\tChange Date\n\t<3>\tCancel Reservation\n\t<4>\tMake Order\n");
             char opt = in.nextLine().charAt(0);
             switch (opt) {
                 case ('1') -> {
@@ -275,6 +275,17 @@ public class RestaurantSystem {
                         restaurants.get(param).cancelReservation(reservation);
                         System.out.println("Reservation cancelled");
                     }
+                }
+                case ('4') -> {
+                    Restaurant activeBranch = new Restaurant();
+                    for (int i = 0; i < restaurants.size(); i++){
+                        for (Reservation reservation1: restaurants.get(i).getReservations()){
+                            if (reservation1.getCustomerID() == reservation.getCustomerID()){
+                                activeBranch = restaurants.get(i);
+                            }
+                        }
+                    }
+                    makeOrder(activeBranch, reservation);
                 }
                 default -> {
                 }
@@ -358,6 +369,11 @@ public class RestaurantSystem {
         }
     }
 
+    public void makeOrder (Restaurant rest, Reservation resv){
+        Menu menu = rest.getMenu();
+        int numberofItemsLeft = resv.NoOfPeople;
+        //Category chosenCategory = (ArrayList<Category>) choose(menu.getItems());
+    }
     private void SaveAll() throws RuntimeException{
         try (PrintWriter outRest = new PrintWriter("restaurants.csv")){
             for (Restaurant restaurant: restaurants){
