@@ -2,6 +2,7 @@ package src;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -401,5 +402,9 @@ public class RestaurantSystem {
         }
 
 
+    }
+    public static void main(String[] args) throws IOException {
+        RestaurantSystem system = new RestaurantSystem();
+        system.run();
     }
 }
