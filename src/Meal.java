@@ -26,4 +26,19 @@ public class Meal extends Item{
         Item drinkItem = new Item(drink, price); items.add(drinkItem);
     }
 
+    public double computePrice() {
+        double price = 0;
+        for (int i = 0; i < this.items.size(); i++) {
+            price = price + this.items.get(i).getPrice();
+        }
+        return price;
+    }
+
+    public String toString(){
+        StringBuilder items = new StringBuilder();
+        for (int i = 0; i < this.items.size(); i++) {
+            items.append(this.items.get(i).toString()).append("\n");
+        }
+        return items.toString();
+    }
 }
