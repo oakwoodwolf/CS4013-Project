@@ -1,6 +1,5 @@
 package src;
 
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class Item {
@@ -10,35 +9,36 @@ public class Item {
 
     private ArrayList<Meal> items;
 
-    public Item(String name, double price){
+    public Item(String name, double price) {
         this.name = name;
         this.price = price;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String aName){
+    public void setName(String aName) {
         this.name = aName;
     }
 
-    public double getPrice(){
+    public double getPrice() {
         return price;
     }
-    public void setPrice(double aPrice){
+
+    public void setPrice(double aPrice) {
         price = aPrice;
     }
 
-    public void removeItem(){
+    public void removeItem() {
         items.clear();
     }
 
-    public String toString(){
+    public String toString() {
         return name + "£" + price;
     }
 
-        }
+}
 
 
 

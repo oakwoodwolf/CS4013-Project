@@ -1,9 +1,7 @@
 package src;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.io.*;
 
 public class Menu {
 
@@ -14,7 +12,8 @@ public class Menu {
     public Menu(ArrayList<Category> items) throws FileNotFoundException {
         this.items = items;
     }
-    public Menu(){
+
+    public Menu() {
 
     }
 
@@ -36,8 +35,7 @@ public class Menu {
 //    }
 
 
-
-    }
+}
 
 
 
