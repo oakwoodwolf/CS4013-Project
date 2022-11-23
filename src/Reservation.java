@@ -23,7 +23,7 @@ public class Reservation {
 
     /**
      *This gets the unique reservation Id
-     * @return reservation Id
+     * @return reservation Id as a String 
      */
     public String getReservationID() {
         return reservationID;
@@ -31,7 +31,7 @@ public class Reservation {
 
     /**
      *Gets the Id of the customer who made the reservation
-     * @return customer Id
+     * @return customer Id as an int 
      */
     public int getCustomerID() {
         return this.CustomerId;
@@ -39,7 +39,7 @@ public class Reservation {
 
     /**
      *This  gets the date that the reservation was made for
-     * @return the date
+     * @return the date as LocalDate
      */
     public LocalDate getDate() {
         return LocalDate;
@@ -52,7 +52,7 @@ public class Reservation {
 
     /**
      *This  gets the time that the reservation was made for
-     * @return the time
+     * @return the time as LocalTime
      */
     public LocalTime getTime() {
         return LocalTime;
