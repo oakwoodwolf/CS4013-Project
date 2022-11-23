@@ -93,7 +93,7 @@ public class RestaurantSystem {
             String reservationID = csvContent[0];
             int numberOfPeople = Integer.parseInt(csvContent[1]);
             String[] dateTemp = csvContent[2].split("-");
-            LocalDate date = LocalDate.of(2000 + (Integer.parseInt(dateTemp[0])), Integer.parseInt(dateTemp[1]), Integer.parseInt(dateTemp[2]));
+            LocalDate date = LocalDate.of((Integer.parseInt(dateTemp[0])), Integer.parseInt(dateTemp[1]), Integer.parseInt(dateTemp[2]));
             String[] timeTemp = csvContent[3].split(":");
             String minutesTemp = timeTemp[1].substring(0, 1);
             LocalTime time = LocalTime.of(Integer.parseInt(timeTemp[0]), Integer.parseInt(minutesTemp));
