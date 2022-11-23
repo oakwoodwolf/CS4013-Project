@@ -34,8 +34,7 @@ public class IncomeRecords {
     public ArrayList<Bill> showIncomeHistory(LocalDate date) {
         ArrayList<Bill> temp = new ArrayList<>();
         for (Bill bill : Bills) {
-            if (date == bill.getDateTime())
-                temp.add(bill);
+            if (date.isEqual(bill.getDateTime())) temp.add(bill);
         }
         return temp;
     }
@@ -45,7 +44,7 @@ public class IncomeRecords {
     public String toCSV() {
         String IncomeRecords = new String("");
         for (Bill bill : Bills) {
-            IncomeRecords = new String(IncomeRecords + bill.getDateTime() + "," + bill.getTime() + "," + bill.getCustomerID() + "," + bill.getBillID() + ","   + bill.getPrice() + "\n");
+            IncomeRecords = new String(IncomeRecords + bill.getDateTime() + "," + bill.getTime() + "," + bill.getCustomerID() + "," + bill.getBillID() + ","   + bill.getPrice()+ ","   + bill.getPaymentMethod()+ ","   + bill.getTip() + "\n");
         }
         return IncomeRecords;
     }

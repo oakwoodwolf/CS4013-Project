@@ -45,6 +45,10 @@ public class Bill {
         return price;
     }
 
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
     public int getBillID() {
         return billID;
     }

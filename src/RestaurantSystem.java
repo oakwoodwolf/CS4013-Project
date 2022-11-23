@@ -241,7 +241,7 @@ public class RestaurantSystem {
         System.out.println("What would you like to do?:\n\t<1>: Check Income Records\n\t<2>: Add Menu Item\n");
         String command = String.valueOf(in.nextLine().charAt(0));
         switch (command) {
-            //case ("1") -> CheckRecords();
+            case ("1") -> CheckRecords(restaurant);
             case ("2") -> AddItem(restaurant);
             default -> {
                 break;
@@ -283,6 +283,13 @@ public class RestaurantSystem {
                 System.out.println(restaurant.getId() + ": " + currentReservations);
             }
         }
+    }
+    public void CheckRecords(Restaurant restaurant){
+        IncomeRecords record = restaurant.getRecords();
+        System.out.println("Select a date: YYYY-MM-DD");
+        LocalDate toCompare = LocalDate.parse(in.nextLine());
+        System.out.println("Available for " + toCompare);
+        System.out.println(record.showIncomeHistory(toCompare));
     }
 
     /**
