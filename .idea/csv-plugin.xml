@@ -59,6 +59,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\yumportumna_income.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\yumportumna_menu.csv">
           <value>
             <Attribute>

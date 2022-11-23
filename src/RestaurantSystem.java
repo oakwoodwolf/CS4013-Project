@@ -133,7 +133,7 @@ public class RestaurantSystem {
             String paymentMethod = csvContent[5];
             double tip = Double.parseDouble(csvContent[6]);
 
-            Bill bill = new Bill(price, paymentMethod, tip, date, customerID, billID);
+            Bill bill = new Bill(price, paymentMethod, tip, date, time, customerID, billID);
             bills.add(bill);
             System.out.println("Loaded Bill:\n" + bill.toString());
 
