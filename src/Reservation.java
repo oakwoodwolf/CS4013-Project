@@ -23,7 +23,7 @@ public class Reservation {
 
     /**
      *This gets the unique reservation Id
-     * @return reservation Id as a String 
+     * @return string that represents reservation Id
      */
     public String getReservationID() {
         return reservationID;
@@ -31,7 +31,7 @@ public class Reservation {
 
     /**
      *Gets the Id of the customer who made the reservation
-     * @return customer Id as an int 
+     * @return an int that represents customer Id
      */
     public int getCustomerID() {
         return this.CustomerId;
@@ -39,7 +39,7 @@ public class Reservation {
 
     /**
      *This  gets the date that the reservation was made for
-     * @return the date as LocalDate
+     * @return LocalDate that represents the date
      */
     public LocalDate getDate() {
         return LocalDate;
@@ -52,23 +52,23 @@ public class Reservation {
 
     /**
      *This  gets the time that the reservation was made for
-     * @return the time as LocalTime
+     * @return LocalTime that represents the time
      */
     public LocalTime getTime() {
         return LocalTime;
     }
 
     /**
-     *this returns the objects as a string
-     * @return everything as a string
+     *Gets the current state of the reservation object
+     * @return string representation of the reservation object
      */
     public String toString() {
         return reservationID + "\t" + CustomerId + "\t" + TableId + "\t" + NoOfPeople + "\t" + LocalDate + "\t" + LocalTime;
     }
 
     /**
-     * changes format to comma separated
-     * @return everything comma separated except CustomerId which is space separated
+     * Gets the current state of the reservation object
+     * @return string that represents this object but comma separated except CustomerId which is space separated
      */
     public String toCSV() {
         return reservationID + "," + NoOfPeople + "," + LocalDate + "," + LocalTime + "," + TableId + "," + CustomerId + "\n";
@@ -76,7 +76,7 @@ public class Reservation {
 
     /**
      * gets the id of the table that the booking was made for
-     * @return the uniqye table id
+     * @return int that represents table id
      */
     public int getTableId() {
         return TableId;
