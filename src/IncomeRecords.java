@@ -12,7 +12,7 @@ public class IncomeRecords {
     public int CustomerId;
     public double price;
 
-    ArrayList<String> Bills = new ArrayList<String>();
+    ArrayList<Bill> Bills = new ArrayList<Bill>();
 
     public IncomeRecords(double day, double date, ArrayList bills) {
         price = totalPrice(bills);
@@ -21,10 +21,10 @@ public class IncomeRecords {
     public double getTotalPrice() {
         return this.price;
     }
-    public int totalPrice(ArrayList<String> Bills) {
-        int totalPrice = 0;
-        for (double i = 0; i < Bills.size(); i++) {
-            totalPrice += (Bills.get().getTotalPrice());
+    public double totalPrice(ArrayList<Bill> Bills) {
+        double totalPrice = 0;
+        for (int i = 0; i < Bills.size(); i++) {
+            totalPrice += (Bills.get(i).getTotalPrice());
         }
         return totalPrice;
     }

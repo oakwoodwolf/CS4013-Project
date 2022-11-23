@@ -17,6 +17,10 @@ public class Bill {
         totalPrice = price + tip;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
     public String toString() {
         return "Price: " + price + "\nPayment Method: " + paymentMethod + "\nTip: " + tip + "\nTotal Price:" + totalPrice + "\nDate: " + dateTime.toLocalDate();
     }
