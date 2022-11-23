@@ -200,12 +200,13 @@ public class RestaurantSystem {
         boolean running = true;
         while (running) {
             System.out.println("\nEnter the number of your desired option:");
-            System.out.println("\t<1>: Book a Reservation\n\t<2>: Check Reservations\n\t<3>: Your Reservations");
+            System.out.println("\t<1>: Book a Reservation\n\t<2>: Check Reservations\n\t<3>: Your Reservations\n\t<4>: Staff Options");
             String command = String.valueOf(in.nextLine().charAt(0));
             switch (command) {
                 case ("1") -> bookAReservation();
                 case ("2") -> CheckAllReservations();
                 case ("3") -> checkYourReservations();
+                case ("4") -> staffOptions();
                 default -> running = exitMenu();
             }
         }
@@ -226,7 +227,31 @@ public class RestaurantSystem {
         in.close();
         return running;
     }
+    private void staffOptions(){
+        System.out.println("Select your branch:");
+        Restaurant restaurant = chooseRestaurants(restaurants);
+        System.out.println("What would you like to do?:\n\t<1>: Check Income Records\n\t<2>: Add Menu Item\n");
+        String command = String.valueOf(in.nextLine().charAt(0));
+        switch (command) {
+            //case ("1") -> CheckRecords();
+            case ("2") -> AddItem(restaurant);
+            default -> {
+                break;
+            }
+        }
+    }
+    public void AddItem(Restaurant restaurant){
+        Menu menu = restaurant.getMenu();
+        System.out.println("Choose a category for the item you are adding");
+        Category category = chooseCategory(menu.getItems());
+        System.out.println("Insert a name: E.g. Large Fries");
+        String name = in.nextLine();
+        System.out.println("Insert the price: E.g. 19.46");
+        double price = Double.parseDouble(in.nextLine());
+        category.addItem(name, price);
+        System.out.println("Done!");
 
+    }
     /**
      * Checks all reservations in every restaurant by day
      */
@@ -525,6 +550,9 @@ public class RestaurantSystem {
                 }
                 try (PrintWriter outResv = new PrintWriter(restaurant.getId().toLowerCase() + "_menu.csv")) {
                     outResv.print(restaurant.getMenu().toCSV());
+                }
+                try (PrintWriter outResv = new PrintWriter(restaurant.getId().toLowerCase() + "_income.csv")) {
+                 //   outResv.print(restaurant.getRecords().toCSV());
                 }
             }
         } catch (FileNotFoundException e) {

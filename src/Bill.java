@@ -64,4 +64,7 @@ public class Bill {
     public String toString() {
         return "Price: " + price + "\nPayment Method: " + paymentMethod + "\nTip: " + tip + "\nTotal Price:" + totalPrice + "\nDate: " + dateTime;
     }
+    public String toCSV(){
+        return dateTime + "," + time+ ","+ customerID + "," + billID + "," +price + "," + paymentMethod + "," +tip + "\n";
+    }
 }
