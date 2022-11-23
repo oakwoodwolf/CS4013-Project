@@ -3,12 +3,13 @@ package src;
 import java.util.ArrayList;
 
 public class Order {
-    ArrayList<Meal> orderedMeals;
+    ArrayList<Item> orderedMeals;
     char status;
 
-    public Order(ArrayList<Meal> orderedMeals) {
+    public Order(ArrayList<Item> orderedMeals) {
         this.orderedMeals = orderedMeals;
     }
+
 
 //  public Bill createBill(){
 //
@@ -18,7 +19,7 @@ public class Order {
     public double computeTotalCost() {
         double totalCost = 0;
         for (int i = 0; i < this.orderedMeals.size(); i++) {
-            totalCost = totalCost + this.orderedMeals.get(i).computePrice();
+            totalCost = totalCost + this.orderedMeals.get(i).getPrice();
         }
         return totalCost;
     }

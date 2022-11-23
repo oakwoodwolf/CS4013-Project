@@ -325,7 +325,8 @@ public class RestaurantSystem {
     }
 
     /**
-     * A non-specific choice machine. An arraylist of any object can be turned into a selection through this
+     * A non-specific choice machine. An arraylist of any object should be turned into a selection through this.
+     * Unfortunately it doesn't work so there is like five dupes of this.
      *
      * @param choices the arraylist to grab options from
      * @return Object to choose.
@@ -344,6 +345,47 @@ public class RestaurantSystem {
             }
         }
     }
+    /**
+     * A non-specific choice machine. An arraylist of any object can be turned into a selection through this
+     *
+     * @param choices the arraylist to grab options from
+     * @return Object to choose.
+     */
+    private Category chooseCategory(ArrayList<Category> choices) {
+        if (choices.isEmpty()) return null;
+        while (true) {
+            int opt = 1;
+            for (Object choice : choices) {
+                System.out.println(opt + ">\t" + choice.toString());
+                opt++;
+            }
+            param = Integer.parseInt(in.nextLine()) - 1;
+            if (0 <= param && param < choices.size()) {
+                return choices.get(param);
+            }
+        }
+    }
+    /**
+     * A non-specific choice machine. An arraylist of any object can be turned into a selection through this
+     *
+     * @param choices the arraylist to grab options from
+     * @return Item to choose.
+     */
+    private Item chooseItem(ArrayList<Item> choices) {
+        if (choices.isEmpty()) return null;
+        while (true) {
+            int opt = 1;
+            for (Object choice : choices) {
+                System.out.println(opt + ">\t" + choice.toString());
+                opt++;
+            }
+            param = Integer.parseInt(in.nextLine()) - 1;
+            if (0 <= param && param < choices.size()) {
+                return choices.get(param);
+            }
+        }
+    }
+
 
     private Table chooseTable(ArrayList<Table> choices) {
         if (choices.isEmpty()) return null;
@@ -380,11 +422,57 @@ public class RestaurantSystem {
         }
     }
 
+    /**
+     * This is how customers order their meal after viewing their reservation. The parameters are autofill in context
+     * @param rest the Restaurant they are ordering from
+     * @param resv their Reservation
+     */
     public void makeOrder(Restaurant rest, Reservation resv) {
         Menu menu = rest.getMenu();
+        ArrayList<Item> itemsToOrder = new ArrayList<>();
+        Double currentPrice = 0.0;
+        int index = 0;
+        while (index < resv.NoOfPeople){
+            System.out.println("__________Menu:_________");
+            Category chosenCategory = chooseCategory(menu.getItems());
+            for (int i = 0; i < resv.NoOfPeople; i++){
+                System.out.println(chosenCategory.getName() + "\t$" + currentPrice);
+                Item order = chooseItem(chosenCategory.getItems());
+                currentPrice += order.getPrice();
+                itemsToOrder.add(order);
+                index++;
+            }
+        }
+        System.out.println("Thank you for Ordering! Finalizing Order");
+        Order order = new Order(itemsToOrder);
+        System.out.printf("Thank you for ordering! That will be: %6.2f%n", order.computeTotalCost());
+        System.out.println(order);
+        System.out.println("How would you like to pay?\t <1>: Cash\t <2>: Card");
+        String paymentMethod = new String("");
+        String command = String.valueOf(in.nextLine().charAt(0));
+        switch (command) {
+            case ("1") -> paymentMethod = new String("Cash");
+            case ("2") -> paymentMethod = new String("Card");
+            default -> {
+                System.out.println("You have to pay, you know!");
+                return;
+            }
+        }
+        System.out.println("Please enter the cost to confirm you can pay:");
+        Double temp = Double.parseDouble(in.nextLine());
+        Double tip = 0.0;
+        if (temp == order.computeTotalCost()){
+            System.out.println("Do you want to tip?\t\tY\tN");
+            if (in.nextLine().toUpperCase().contentEquals("Y")){
+                System.out.println("How much do you want to tip?");
+                tip = Double.parseDouble(in.nextLine());
+            }
+            Bill bill = new Bill(order.computeTotalCost(), paymentMethod, tip);
+            System.out.println("Bill printed:\n" + bill.toString());
+        } else return;
+        System.out.println("Thank you for Ordering, enjoy your food!\n");
         //ArrayList<Object> menuObjects = (ArrayList<Object>) menu.getItems();
-        int numberofItemsLeft = resv.NoOfPeople;
-        //Object chosenCategory = choose((ArrayList<Object>) menu.getItems());
+
     }
 
     private void SaveAll() throws RuntimeException {
@@ -396,6 +484,9 @@ public class RestaurantSystem {
                         outResv.print(reservation.toCSV());
                     }
                 }
+                try (PrintWriter outResv = new PrintWriter(restaurant.getId().toLowerCase() + "_menu.csv")) {
+                    outResv.print(restaurant.getMenu().toCSV());
+                }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -403,6 +494,11 @@ public class RestaurantSystem {
 
 
     }
+
+    /**
+     * This is the program's starting code.
+     * @throws IOException In case the Scanner receives an unknown input
+     */
     public static void main(String[] args) throws IOException {
         RestaurantSystem system = new RestaurantSystem();
         system.run();

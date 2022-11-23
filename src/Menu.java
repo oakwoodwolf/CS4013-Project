@@ -24,6 +24,16 @@ public class Menu {
     public ArrayList<Category> getItems() {
         return items;
     }
+
+    public String toCSV() {
+        String temp = new String();
+        for (Category item : items) {
+            for (int j = 0; j < item.getItems().size(); j++) {
+                temp = new String(temp + item.getName() + "," + item.getItems().get(j).getName() + "," + item.getItems().get(j).getPrice()+ "\n");
+            }
+        }
+        return temp;
+    }
     //    String path = "\"C:\\Users\\keith\\Downloads\\Menu.csv\"";
 //    String line = "";
 //

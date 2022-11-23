@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Item {
 
     private String name;
-    private double price;
+    private double price = 0.0;
 
-    private ArrayList<Meal> items;
+    private ArrayList<Item> items;
 
     public Item(String name, double price) {
         this.name = name;

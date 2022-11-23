@@ -34,8 +34,8 @@ public class Meal extends Item {
 
     public double computePrice() {
         double price = 0;
-        for (int i = 0; i < this.items.size(); i++) {
-            price = price + this.items.get(i).getPrice();
+        for (Item item : this.items) {
+            price += item.getPrice();
         }
         return price;
     }
@@ -47,4 +47,5 @@ public class Meal extends Item {
         }
         return items.toString();
     }
+
 }

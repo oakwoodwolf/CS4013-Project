@@ -1,5 +1,6 @@
 package src;
 
+import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
 
 public class Bill {
@@ -7,7 +8,7 @@ public class Bill {
     String paymentMethod;
     double tip;
     double totalPrice;
-    GregorianCalendar dateTime = new GregorianCalendar();
+    LocalDateTime dateTime = LocalDateTime.now();
 
     Bill(double price, String paymentMethod, double tip) {
         this.price = price;
@@ -17,6 +18,6 @@ public class Bill {
     }
 
     public String toString() {
-        return "Price: " + price + "\nPayment Method: " + paymentMethod + "\nTip: " + tip + "\nTotal Price:" + totalPrice + "\nDate: " + dateTime.getTime();
+        return "Price: " + price + "\nPayment Method: " + paymentMethod + "\nTip: " + tip + "\nTotal Price:" + totalPrice + "\nDate: " + dateTime.toLocalDate();
     }
 }

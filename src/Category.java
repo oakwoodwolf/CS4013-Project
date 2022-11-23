@@ -36,5 +36,7 @@ public class Category {
         items.clear();
     }
 
-
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 }

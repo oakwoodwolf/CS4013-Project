@@ -1,21 +1,21 @@
-Drink,Coca Cola,2.00
-Drink,Coca Cola Zero,1.80
-Drink,Sprite,2.00
-Drink,Sprite Free,1.80
-Drink,Strawberry Milkshake,2.60
-Drink,Chocolate Milkshake,2.60
-Drink,Water,1.50
+Drink,Coca Cola,2.0
+Drink,Coca Cola Zero,1.8
+Drink,Sprite,2.0
+Drink,Sprite Free,1.8
+Drink,Strawberry Milkshake,2.6
+Drink,Chocolate Milkshake,2.6
+Drink,Water,1.5
 Side,Wedges,2.75
-Side,Fries,3.00
-Side,Large Fries,3.50
-Side,Nacho Fires,5.00
-Side,Garlic Fries,4.50
-Side,Prawn Crackers,2.00
-Side,Chicken Nuggets,3.40
-Main,Veggie Burger,4.50
-Main,Yum Burger,5.20
-Main,Doner Kebab,6.00
-Main,UL Chicken Roll,10.00
+Side,Fries,3.0
+Side,Large Fries,3.5
+Side,Nacho Fires,5.0
+Side,Garlic Fries,4.5
+Side,Prawn Crackers,2.0
+Side,Chicken Nuggets,3.4
+Main,Veggie Burger,4.5
+Main,Yum Burger,5.2
+Main,Doner Kebab,6.0
+Main,UL Chicken Roll,10.0
 Main,Pepperoni Pizza,8.25
-Meal,Hungry Meal,9.00,Fries,Coca Cola,Veggie Burger
-Meal,Yum Meal,10.00,Nacho Fries,Coca Cola,Yum Burger
+Meal,Hungry Meal,9.0
+Meal,Yum Meal,10.0
