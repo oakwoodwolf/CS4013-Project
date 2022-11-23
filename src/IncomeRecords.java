@@ -1,5 +1,6 @@
 package src;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class IncomeRecords {
 
     ArrayList<Bill> Bills = new ArrayList<Bill>();
 
-    public IncomeRecords(ArrayList<Bill> bills) {
+    public IncomeRecords(ArrayList bills) {
         price = totalPrice(bills);
     }
 
@@ -30,9 +31,13 @@ public class IncomeRecords {
     }
 
 
-    public void showIncome(double day, double totalPrice) {
-        this.Day = day;
-        this.price = totalPrice;
+    public ArrayList<Bill> showIncome(LocalDate date) {
+        ArrayList<Bill> temp = new ArrayList<>();
+        for (Bill bill : Bills) {
+            if (date == bill.getDateTime())
+                temp.add(bill);
+        }
+        return temp;
     }
 
     public void showIncomeHistory(double day, double totalPrice) {
@@ -41,7 +46,7 @@ public class IncomeRecords {
     public String toCSV() {
         StringBuilder temp = new StringBuilder(new String());
         for (Bill bill : Bills) {
-            String IncomeRecords = (LocalDate + "," + LocalTime + "," + billId + "," + CustomerId + "," + getTotalPrice() + "/n");
+            String IncomeRecords = (LocalDate + "," + LocalTime + "," + CustomerId + "," + billId + ","   + getTotalPrice() + "/n");
             temp.append(IncomeRecords);
         }
 return temp.toString();
