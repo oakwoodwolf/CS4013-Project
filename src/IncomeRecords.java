@@ -39,6 +39,23 @@ public class IncomeRecords {
         return temp;
     }
 
+    /**
+     * This uses show income history for specific dates
+     * @param start the starting range for dates
+     * @param end the end range for dates
+     * @return an arrayList of bills from that range
+     */
+    public ArrayList<Bill> showMultiIncomeHistory(LocalDate start, LocalDate end) {
+        ArrayList<Bill> temp = new ArrayList<>();
+        for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)){
+            ArrayList<Bill> toAppend = showIncomeHistory(date);
+            for (int i = 0; i < toAppend.size(); i++){
+                temp.add(toAppend.get(i));
+            }
+        }
+        return temp;
+    }
+
 
 
     public String toCSV() {
