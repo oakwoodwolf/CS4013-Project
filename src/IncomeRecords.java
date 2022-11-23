@@ -43,11 +43,10 @@ public class IncomeRecords {
 
 
     public String toCSV() {
-        StringBuilder temp = new StringBuilder(new String());
+        String IncomeRecords = new String("");
         for (Bill bill : Bills) {
-            String IncomeRecords = (LocalDate + "," + LocalTime + "," + CustomerId + "," + billId + ","   + getTotalPrice() + "/n");
-            temp.append(IncomeRecords);
+            IncomeRecords = new String(IncomeRecords + bill.getDateTime() + "," + bill.getTime() + "," + bill.getCustomerID() + "," + bill.getBillID() + ","   + bill.getPrice() + "\n");
         }
-return temp.toString();
+        return IncomeRecords;
     }
 }

@@ -107,6 +107,13 @@ public class RestaurantSystem {
         System.out.println("Loaded");
         resVScan.close();
     }
+
+    /**
+     * This loads the <b>Income Records</b> for the Restaurant
+     * @param csvContents Arraylist for CSV loading
+     * @param restaurant the restaurant to load the CSV for
+     * @throws FileNotFoundException If the CSV cannot be found
+     */
     private void LoadRecords(ArrayList<String[]> csvContents, Restaurant restaurant) throws FileNotFoundException {
 
         System.out.println("Loading Records for " + restaurant);
@@ -139,6 +146,7 @@ public class RestaurantSystem {
 
         }
         IncomeRecords incomeRecords = new IncomeRecords(bills);
+        restaurant.setRecords(incomeRecords);
         System.out.println("Loaded");
         resVScan.close();
     }
@@ -552,7 +560,7 @@ public class RestaurantSystem {
                     outResv.print(restaurant.getMenu().toCSV());
                 }
                 try (PrintWriter outResv = new PrintWriter(restaurant.getId().toLowerCase() + "_income.csv")) {
-                 //   outResv.print(restaurant.getRecords().toCSV());
+                    outResv.print(restaurant.getRecords().toCSV());
                 }
             }
         } catch (FileNotFoundException e) {
