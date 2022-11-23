@@ -9,6 +9,7 @@ public class Restaurant {
 //    private int currentCapacity;
 
     private Menu menu = new Menu();
+    private IncomeRecords records;
     private final ArrayList<Table> tables = new ArrayList<Table>();
     private final ArrayList<Reservation> reservations;
     private final int seatsPerTable = 6;
@@ -57,6 +58,14 @@ public class Restaurant {
      */
     public int getCapacity() {
         return capacity;
+    }
+
+    public IncomeRecords getRecords() {
+        return records;
+    }
+
+    public void setRecords(IncomeRecords records) {
+        this.records = records;
     }
 
     @Override

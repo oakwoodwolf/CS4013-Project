@@ -14,7 +14,7 @@ public class IncomeRecords {
 
     ArrayList<Bill> Bills = new ArrayList<Bill>();
 
-    public IncomeRecords(double day, double date, ArrayList bills) {
+    public IncomeRecords(ArrayList<Bill> bills) {
         price = totalPrice(bills);
     }
 
