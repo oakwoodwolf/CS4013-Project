@@ -433,9 +433,9 @@ public class RestaurantSystem {
         Double currentPrice = 0.0;
         int index = 0;
         while (index < resv.NoOfPeople){
-            System.out.println("__________Menu:_________");
-            Category chosenCategory = chooseCategory(menu.getItems());
             for (int i = 0; i < resv.NoOfPeople; i++){
+                System.out.println("__________Menu:_________");
+                Category chosenCategory = chooseCategory(menu.getItems());
                 System.out.println(chosenCategory.getName() + "\t$" + currentPrice);
                 Item order = chooseItem(chosenCategory.getItems());
                 currentPrice += order.getPrice();
