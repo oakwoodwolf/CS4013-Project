@@ -31,7 +31,7 @@ public class IncomeRecords {
     }
 
 
-    public ArrayList<Bill> showIncome(LocalDate date) {
+    public ArrayList<Bill> showIncomeHistory(LocalDate date) {
         ArrayList<Bill> temp = new ArrayList<>();
         for (Bill bill : Bills) {
             if (date == bill.getDateTime())
@@ -40,8 +40,7 @@ public class IncomeRecords {
         return temp;
     }
 
-    public void showIncomeHistory(double day, double totalPrice) {
-    }
+
 
     public String toCSV() {
         StringBuilder temp = new StringBuilder(new String());
