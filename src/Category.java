@@ -35,6 +35,9 @@ public class Category {
     public void removeItem() {
         items.clear();
     }
+    public String toString(){
+        return name + newItem;
+    }
 
     public ArrayList<Item> getItems() {
         return items;
