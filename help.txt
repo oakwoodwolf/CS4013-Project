@@ -1,0 +1,7 @@
+How to Run!
+This uses a text based interface. Compile RestaurantSystem.java to run the project.
+
+To book:
+	Choose the Book a Reservation option
+To order:
+	you need to view your reservation by entering the customer id

@@ -36,7 +36,7 @@ public class Category {
         items.clear();
     }
     public String toString(){
-        return name + newItem;
+        return "Category: " + name + " " + newItem;
     }
 
     public ArrayList<Item> getItems() {

@@ -73,6 +73,15 @@ public class Bill {
     }
 
     /**
+     * Gets the payment method of the bill
+     * @return An String representing the type of payment for the bill.
+     */
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    /**
      * Gets the id of the bill
      * @return An int representing the id of the bill.
      */

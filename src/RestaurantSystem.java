@@ -238,11 +238,12 @@ public class RestaurantSystem {
     private void staffOptions(){
         System.out.println("Select your branch:");
         Restaurant restaurant = chooseRestaurants(restaurants);
-        System.out.println("What would you like to do?:\n\t<1>: Check Income Records\n\t<2>: Add Menu Item\n");
+        System.out.println("What would you like to do?:\n\t<1>: Check Income Records for a day\n\t<2>: Check Income Records for a range of days\n\t<3>: Add Menu Item\n");
         String command = String.valueOf(in.nextLine().charAt(0));
         switch (command) {
-            //case ("1") -> CheckRecords();
-            case ("2") -> AddItem(restaurant);
+            case ("1") -> CheckRecords(restaurant);
+            case ("2") -> CheckMultiRecords(restaurant);
+            case ("3") -> AddItem(restaurant);
             default -> {
                 break;
             }
@@ -283,6 +284,31 @@ public class RestaurantSystem {
                 System.out.println(restaurant.getId() + ": " + currentReservations);
             }
         }
+    }
+
+    /**
+     *  This lets you view records for an individual day.
+     * @param restaurant the restaurant to view the records for
+     */
+    public void CheckRecords(Restaurant restaurant){
+        IncomeRecords record = restaurant.getRecords();
+        System.out.println("Select a date: YYYY-MM-DD");
+        LocalDate toCompare = LocalDate.parse(in.nextLine());
+        System.out.println("Available for " + toCompare);
+        System.out.println(record.showIncomeHistory(toCompare));
+    }
+    /**
+     *  This lets you view records for an individual day.
+     * @param restaurant the restaurant to view the records for
+     */
+    public void CheckMultiRecords(Restaurant restaurant){
+        IncomeRecords record = restaurant.getRecords();
+        System.out.println("Select a start date: YYYY-MM-DD");
+        LocalDate start = LocalDate.parse(in.nextLine());
+        System.out.println("Select an end date: YYYY-MM-DD");
+        LocalDate end = LocalDate.parse(in.nextLine());
+        System.out.println("Available between " + start);
+        System.out.println(record.showMultiIncomeHistory(start, end));
     }
 
     /**
