@@ -16,7 +16,7 @@ public class IncomeRecords {
     ArrayList<Bill> Bills = new ArrayList<Bill>();
 
     public IncomeRecords(ArrayList bills) {
-        price = totalPrice(bills);
+        this.Bills = bills;
     }
 
     public double getTotalPrice() {
