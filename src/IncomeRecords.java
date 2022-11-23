@@ -19,9 +19,19 @@ public class IncomeRecords {
         this.Bills = bills;
     }
 
+    /**
+     *This uses totalPrice to get the price of a specific bill
+     * @return the price of the bill
+     */
     public double getTotalPrice() {
         return this.price;
     }
+
+    /**
+     * This adds the total prices from each bill in the ArrayList
+     * @param Bills uses bills to get the total price
+     * @return the total price of all the bills in the ArrayList
+     */
     public double totalPrice(ArrayList<Bill> Bills) {
         double totalPrice = 0;
         for (int i = 0; i < Bills.size(); i++) {
@@ -30,7 +40,11 @@ public class IncomeRecords {
         return totalPrice;
     }
 
-
+    /**
+     *This checks if the given date is equal to the date on the bills and if it is it adds it to an ArrayList
+     * @param date the income history on that specific day
+     * @return an arrayList of all bills on a given day
+     */
     public ArrayList<Bill> showIncomeHistory(LocalDate date) {
         ArrayList<Bill> temp = new ArrayList<>();
         for (Bill bill : Bills) {
@@ -57,7 +71,10 @@ public class IncomeRecords {
     }
 
 
-
+    /**
+     *This changes objects to a comma separated format
+     * @return everything in IncomeRecords separated by commas
+     */
     public String toCSV() {
         String IncomeRecords = new String("");
         for (Bill bill : Bills) {
