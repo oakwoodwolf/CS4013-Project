@@ -17,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\test_income.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\test_menu.csv">
           <value>
             <Attribute>
@@ -25,6 +32,13 @@
           </value>
         </entry>
         <entry key="\test_reservations.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\yumcastletroy_income.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

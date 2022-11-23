@@ -33,6 +33,7 @@ public class RestaurantSystem {
         for (Restaurant restaurant : restaurants) {
             LoadReservations(csvContents, restaurant);
             LoadMenu(csvContents, restaurant);
+            LoadRecords(csvContents, restaurant);
         }
     }
 
@@ -103,6 +104,41 @@ public class RestaurantSystem {
             restaurant.setReservations(reservation);
             restaurant.setTaken(tableNo);
         }
+        System.out.println("Loaded");
+        resVScan.close();
+    }
+    private void LoadRecords(ArrayList<String[]> csvContents, Restaurant restaurant) throws FileNotFoundException {
+
+        System.out.println("Loading Records for " + restaurant);
+        csvContents.clear();
+        ArrayList<Bill> bills = new ArrayList<>();
+        resV = new FileInputStream(restaurant.getId().toLowerCase() + "_income.csv");
+        Scanner resVScan = new Scanner(resV);
+        while (resVScan.hasNextLine()) {
+            String temp = resVScan.nextLine();
+            //System.out.println(temp);
+            String[] splitter = temp.split(",");
+            csvContents.add(splitter);
+        }
+
+        for (String[] csvContent : csvContents) {
+            String[] dateTemp = csvContent[0].split("-");
+            LocalDate date = LocalDate.of((Integer.parseInt(dateTemp[0])), Integer.parseInt(dateTemp[1]), Integer.parseInt(dateTemp[2]));
+            String[] timeTemp = csvContent[1].split(":");
+            String minutesTemp = timeTemp[1].substring(0, 1);
+            LocalTime time = LocalTime.of(Integer.parseInt(timeTemp[0]), Integer.parseInt(minutesTemp));
+            int customerID = Integer.parseInt(csvContent[2]);
+            int billID = Integer.parseInt(csvContent[3]);
+            double price = Double.parseDouble(csvContent[4]);
+            String paymentMethod = csvContent[5];
+            double tip = Double.parseDouble(csvContent[6]);
+
+            Bill bill = new Bill(price, paymentMethod, tip, date, customerID, billID);
+            bills.add(bill);
+            System.out.println("Loaded Bill:\n" + bill.toString());
+
+        }
+        IncomeRecords incomeRecords = new IncomeRecords(bills);
         System.out.println("Loaded");
         resVScan.close();
     }
@@ -216,6 +252,9 @@ public class RestaurantSystem {
         }
     }
 
+    /**
+     * This code lets you select a restaurant and date and book a reservation.
+     */
     private void bookAReservation() {
         System.out.println("Select a Restaurant");
         Restaurant restaurant = chooseRestaurants(restaurants);
