@@ -21,7 +21,7 @@ public class IncomeRecords {
 
     /**
      *This uses totalPrice to get the price of a specific bill
-     * @return the price of the bill
+     * @return double that represents the price of the bill
      */
     public double getTotalPrice() {
         return this.price;
@@ -30,7 +30,7 @@ public class IncomeRecords {
     /**
      * This adds the total prices from each bill in the ArrayList
      * @param Bills uses bills to get the total price
-     * @return the total price of all the bills in the ArrayList
+     * @return double that represents total price of all the bills in the ArrayList
      */
     public double totalPrice(ArrayList<Bill> Bills) {
         double totalPrice = 0;
@@ -72,8 +72,8 @@ public class IncomeRecords {
 
 
     /**
-     *This changes objects to a comma separated format
-     * @return everything in IncomeRecords separated by commas
+     *Gets the current state of the incomeRecords object
+     * @return string representation of the incomeRecords object but comma separated
      */
     public String toCSV() {
         String IncomeRecords = new String("");
